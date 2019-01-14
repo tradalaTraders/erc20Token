@@ -9,11 +9,13 @@ contract MyToken is ERC20, Ownable {
     string public name = "MyToken";
     string public symbol = "VRK";
     uint public decimals = 18;
+    uint256 constant RESERVED_TOKENS = 50000;
     constructor () public{
         _mint(msg.sender, INITIAL_SUPPLY);
     }
     function transfer(address _to, uint256 _value)  public returns (bool success){
         //check whether account have enough balance or not
+        require(balanceOf(msg.sender)>=RESERVED_TOKENS);
         require(balanceOf(msg.sender)>=_value);
         _transfer(msg.sender,_to,_value);
         return true;
